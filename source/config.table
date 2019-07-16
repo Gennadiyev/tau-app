@@ -1,210 +1,222 @@
 {
+  ["colors"]	= {
+      ["底栏图标触摸波纹"]	= "#24000000" ;
+      ["底栏图标选中"]	= "#ff2eaaaa" ;
+      ["搜索栏背景"]	= "#ffffffff" ;
+      ["导航栏"]	= "#ff212121" ;
+      ["进度条"]	= "#ff7534be" ;
+      ["搜索栏提示文字"]	= "#80000000" ;
+      ["顶栏"]	= "#ff141416" ;
+      ["顶栏部件触摸"]	= "#22000000" ;
+      ["顶栏部件"]	= "#ffffffff" ;
+      ["底栏图标"]	= "#c5bc39d5" ;
+      ["搜索栏部件触摸"]	= "#44000000" ;
+      ["搜索栏部件"]	= "#ff888888" ;
+      ["悬浮按钮图标"]	= "#FFFFFF" ;
+      ["底栏"]	= "#ff141416" ;
+      ["侧滑栏列表文字"]	= "#e7e7e7e7" ;
+      ["侧滑栏背景"]	= "#ff242424" ;
+      ["侧滑栏列表图标"]	= "#ff2eaaaa" ;
+      } ;
+  ["toolbar"]	= {
+      ["icon_btns"]	= {
+          } ;
+      ["menus"]	= {
+          } ;
+      ["输入栏模式"]	= false ;
+      ["启用搜索功能"]	= false ;
+      ["搜索功能"]	= false ;
+      ["搜索URL"]	= "" ;
+      ["搜索框提示"]	= "" ;
+      } ;
   ["sidebar"]	= {
       ["启用顶部图片"]	= true ;
+      ["启用"]	= true ;
       ["items"]	= {
           [1]	= {
-              ["icon"]	= "drawable/exclamation.png" ;
               ["name"]	= "Debug" ;
+              ["icon"]	= "drawable/exclamation.png" ;
               ["onClick"]	= "if debugmode==0 then\
-对话框()\
-.设置标题(\"Debug Mode\")\
-.设置消息(\"While Debug Mode unlocks some features, the software may be unstable in general and may report error occasionally (especially when using LOCKED functions). Please contact the developer if you encounter any issue or see any error.\\nUse Debug Mode at your own risk!\")\
-.设置积极按钮(\"Accept\",function()\
-  debugmode=1\
-  弹出消息(\"You've entered Debug mode.\")\
-end)\
-.设置消极按钮(\"Decline\")\
-.显示()\
-\
+  对话框()\
+  .设置标题(\"Debug Mode\")\
+  .设置消息(\"While Debug Mode unlocks some features, the software may be unstable in general and may report error occasionally (especially when using LOCKED functions). Please contact the developer if you encounter any issue or see any error.\\nUse Debug Mode at your own risk!\")\
+  .设置积极按钮(\"Accept\",function()\
+    debugmode=1\
+    弹出消息(\"You've entered Debug mode.\")\
+  end)\
+  .设置消极按钮(\"Decline\")\
+  .显示()\
 else\
-itemsList={\"Copy Link\",\"Javascript\",\"Cookies\",\"Toggle Debug\"}\
-AlertDialog.Builder(this)\
-.setTitle(\"Debug Dialog\")\
-.setItems(itemsList,{onClick=function(tmp,choice) \
-    if choice==2 then\
-      print(CookieStr)\
-    end\
-    if choice == 3 then\
-      debugmode=1-debugmode\
-      if debugmode==1 then\
-        弹出消息(\"You've entered Debug mode.\")\
-      else\
-        弹出消息(\"You are not in Debug mode.\")\
+  itemsList={\"Copy Link\",\"Javascript\",\"Cookies\",\"Toggle Debug\"}\
+  AlertDialog.Builder(this)\
+  .setTitle(\"Debug Dialog\")\
+  .setItems(itemsList,{onClick=function(tmp,choice) \
+      if choice==2 then\
+        print(CookieStr)\
       end\
-    end\
-    if choice == 0 then\
-      复制文本(网页链接)\
-      弹出消息(\"Link address copied\")\
-    end\
-    if choice == 1 then\
-      InputLayout={\
-        LinearLayout;\
-        orientation=\"vertical\";\
-        Focusable=true,\
-        FocusableInTouchMode=true,\
-        {\
-          EditText;\
-          hint=\"Enter Javascript commands\";\
-          layout_marginTop=\"7dp\";\
-          layout_width=\"77%w\";\
-          layout_gravity=\"center\",\
-          id=\"edit\";\
+      if choice == 3 then\
+        debugmode=1-debugmode\
+        if debugmode==1 then\
+          弹出消息(\"You've entered Debug mode.\")\
+        else\
+          弹出消息(\"You are not in Debug mode.\")\
+        end\
+      end\
+      if choice == 0 then\
+        复制文本(网页链接)\
+        弹出消息(\"Link address copied\")\
+      end\
+      if choice == 1 then\
+        InputLayout={\
+          LinearLayout;\
+          orientation=\"vertical\";\
+          Focusable=true,\
+          FocusableInTouchMode=true,\
+          {\
+            EditText;\
+            hint=\"Enter Javascript commands\";\
+            layout_marginTop=\"7dp\";\
+            layout_width=\"77%w\";\
+            layout_gravity=\"center\",\
+            id=\"edit\";\
+          };\
         };\
-      };\
 \
-      AlertDialog.Builder(this)\
-      .setTitle(\"Javascript (Beta)\")\
-      .setView(loadlayout(InputLayout))\
-      .setPositiveButton(\"Run Script\",{onClick=function(v) \
-          jscode= edit.text\
-          加载Js(jscode)\
-          io.open(\"/sdcard/taustation.js\",\"w\"):write(jscode):close()\
+        AlertDialog.Builder(this)\
+        .setTitle(\"Javascript (Beta)\")\
+        .setView(loadlayout(InputLayout))\
+        .setPositiveButton(\"Run Script\",{onClick=function(v) \
+            jscode= edit.text\
+            加载Js(jscode)\
+            io.open(\"/sdcard/taustation.js\",\"w\"):write(jscode):close()\
 \
 \
-        end})\
-      .setNegativeButton(\"Cancel\",nil)\
-      .show()\
+          end})\
+        .setNegativeButton(\"Cancel\",nil)\
+        .show()\
 \
-    end\
-  end})\
-.show() \
+      end\
+    end})\
+  .show() \
 \
 end\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
 " ;
               } ;
           [2]	= {
-              ["icon"]	= "drawable/google_circles_invite.png" ;
               ["name"]	= "AREAS" ;
+              ["icon"]	= "drawable/google_circles_invite.png" ;
               ["onClick"]	= "-- Event: AREAS Loading\
 if debugmode == 0 then\
   弹出消息(\"LOCKED: In development stage.\")\
 else\
-if string.find(网页链接,\"alpha.taustation.space\") and string.len(CookieStr)>40 then\
-  弹出消息(\"Please wait...\")\
+  if areasloaded==0 then\
+    if string.find(网页链接,\"alpha.taustation.space\") and string.len(CookieStr)>40 then\
+      弹出消息(\"Please wait...\")\
 \
-  Http.get(\"https://taustation.space/return-to-game/\",CookieStr,\"UTF-8\",nil,function(code,content,cookie,header)\
-    CookieStr=cookie\
-    count=0\
-    io.open(\"/sdcard/tau.src\",\"w\"):write(content):close()\
-    contentstart,_=string.find(content,[[<li class=\"area]])\
-    contentend,_=string.find(content,[[CORETECHS]])\
-    content=string.sub(content,contentstart,contentend-444)\
-    io.open(\"/sdcard/tau.src\",\"w\"):write(content):close()\
-    local file = io.open(\"/sdcard/tau.src\")\
-    itemslist={}\
-    urlslist={}\
-    for aline in io.lines(\"/sdcard/tau.src\") do\
-      if string.find(aline,\"<\") then\
-        _,urlbegin=string.find(aline,\"href=\")\
-        urlbegin=urlbegin+2\
-        urlend=string.find(aline,\"class=\",urlbegin)\
-        urlend=urlend-3\
-        _,namebegin=string.find(aline,\">\",urlend+30)\
-        namebegin=namebegin+1\
-        nameend,_=string.find(aline,\"</span>\")\
-        nameend=nameend-1\
-        table.insert(itemslist,string.sub(aline,namebegin,nameend))\
-        table.insert(urlslist,\"https://alpha.taustation.space\"..string.sub(aline,urlbegin,urlend))\
-      end\
-    \
+      Http.get(\"https://taustation.space/return-to-game/\",CookieStr,\"UTF-8\",nil,function(code,content,cookie,header)\
+        CookieStr=cookie\
+        count=0\
+        io.open(\"/sdcard/tau.src\",\"w\"):write(content):close()\
+        contentstart,_=string.find(content,[[<li class=\"area]])\
+        contentend,_=string.find(content,[[CORETECHS]])\
+        content=string.sub(content,contentstart,contentend-444)\
+        io.open(\"/sdcard/tau.src\",\"w\"):write(content):close()\
+        local file = io.open(\"/sdcard/tau.src\")\
+        itemslist={}\
+        urlslist={}\
+        for aline in io.lines(\"/sdcard/tau.src\") do\
+          if string.find(aline,\"<\") then\
+            _,urlbegin=string.find(aline,\"href=\")\
+            urlbegin=urlbegin+2\
+            urlend=string.find(aline,\"class=\",urlbegin)\
+            urlend=urlend-3\
+            _,namebegin=string.find(aline,\">\",urlend+30)\
+            namebegin=namebegin+1\
+            nameend,_=string.find(aline,\"</span>\")\
+            nameend=nameend-1\
+            table.insert(itemslist,string.sub(aline,namebegin,nameend))\
+            table.insert(urlslist,\"https://alpha.taustation.space\"..string.sub(aline,urlbegin,urlend))\
+          end\
+\
+        end\
+\
+        AlertDialog.Builder(this)\
+        .setTitle(\"AREAS\")\
+        .setItems(itemslist,{onClick=function(tmp,choice) \
+            加载网页(urlslist[choice+1])\
+            弹出消息(\"Travelling...\")\
+          end})\
+        .show()\
+\
+\
+        io.close()\
+      end)\
+    else\
+      弹出消息(\"You need to login or be in Tau Station first.\")\
     end\
-    \
+  else\
     AlertDialog.Builder(this)\
     .setTitle(\"AREAS\")\
     .setItems(itemslist,{onClick=function(tmp,choice) \
-      加载网页(urlslist[choice+1])\
-      弹出消息(\"Travelling...\")\
-              end})\
-    .show() \
-\
-\
-\
-\
-    io.close()\
-  end)\
-else\
-弹出消息(\"You need to login or be in Tau Station first.\")\
-end\
+        加载网页(urlslist[choice+1])\
+        弹出消息(\"Travelling...\")\
+      end})\
+    .show()\
+  end\
 end" ;
               } ;
           [3]	= {
-              ["icon"]	= "drawable/book_multiple_variant.png" ;
               ["name"]	= "CORETECHS" ;
+              ["icon"]	= "drawable/book_multiple_variant.png" ;
               ["onClick"]	= "itemsList={\"Archive\",\"Blogs\",\"Cinema\",\"Citizen Council\",\"Forum\",\"Storage\",\"Syndicates\"}\
 AlertDialog.Builder(this)\
 .setTitle(\"CORETECHS\")\
 .setItems(itemsList,{onClick=function(tmp,choice) \
     if choice == 0 then\
-     进入子页面(\"coretechs\",{链接=\"https://alpha.taustation.space/coretechs/archive\"})\
+      进入子页面(\"coretechs\",{链接=\"https://alpha.taustation.space/coretechs/archive\"})\
     end\
     if choice == 1 then\
       进入子页面(\"coretechs\",{链接=\"https://alpha.taustation.space/character/blogs\"})\
     end\
-      if choice == 2 then\
+    if choice == 2 then\
       进入子页面(\"coretechs\",{链接=\"https://alpha.taustation.space/coretechs/cinema\"})\
     end\
-      if choice == 3 then\
+    if choice == 3 then\
       进入子页面(\"coretechs\",{链接=\"https://alpha.taustation.space/coretechs/citizen-council\"})\
     end\
     if choice == 4 then\
       进入子页面(\"coretechs\",{链接=\"https://alpha.taustation.space/forum\"})\
     end\
-      if choice == 5 then\
+    if choice == 5 then\
       进入子页面(\"coretechs\",{链接=\"https://alpha.taustation.space/coretechs/storage\"})\
     end\
-      if choice == 6 then\
+    if choice == 6 then\
       进入子页面(\"coretechs\",{链接=\"https://alpha.taustation.space/syndicates\"})\
     end\
   end})\
 .show()\
 \
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
 " ;
               } ;
           [4]	= {
-              ["icon"]	= "drawable/console.png" ;
               ["name"]	= "Scripts" ;
+              ["icon"]	= "drawable/console.png" ;
               ["onClick"]	= "if debugmode == 0 then\
-弹出消息(\"LOCKED: In development stage.\")\
+  弹出消息(\"LOCKED: In development stage.\")\
 else\
-对话框()\
-.设置标题(\"Disclaimer\")\
-.设置消息(\"Scripts are created by Kunologist, and do not provide any warranty. Use at your own risk.\")\
-.设置积极按钮(\"Accept\",function()\
-  进入子页面(\"scripts\")\
-end)\
-.设置消极按钮(\"Decline\")\
-.显示()\
+  对话框()\
+  .设置标题(\"Disclaimer\")\
+  .设置消息(\"Scripts are created by Kunologist, and do not provide any warranty. Use at your own risk.\")\
+  .设置积极按钮(\"Accept\",function()\
+    进入子页面(\"scripts\")\
+  end)\
+  .设置消极按钮(\"Decline\")\
+  .显示()\
 end" ;
               } ;
           [5]	= {
-              ["icon"]	= "drawable/link_variant.png" ;
               ["name"]	= "External Links" ;
+              ["icon"]	= "drawable/link_variant.png" ;
               ["onClick"]	= "itemsList={\"Tau Guide\",\"TauHead\",\"TauManager\",\"Unofficial Discord\"}\
 AlertDialog.Builder(this)\
 .setTitle(\"External Links\")\
@@ -214,37 +226,37 @@ AlertDialog.Builder(this)\
     end\
     if choice == 2 then\
       if File(\"/sdcard/taumanager.tau\").exists() then\
-      进入子页面(\"taumanager\")\
+        进入子页面(\"taumanager\")\
       else\
-      进入子页面(\"taumanagerlogin\")\
+        进入子页面(\"taumanagerlogin\")\
       end\
     end\
     if choice == 1 then\
       进入子页面(\"tauhead\",{链接=\"https://www.tauhead.com/\"})\
-      end\
+    end\
     if choice == 3 then\
       对话框()\
-.设置标题(\"Official Discord\")\
-.设置消息(\"Are you sure to join the Discord Server?\")\
-.设置积极按钮(\"Yes\",function()\
-  弹出消息(\"Opening Invite Link in the browser...\")\
-  import \"android.content.Intent\"\
-import \"android.net.Uri\"\
-url=\"https://discord.gg/bFA7fQZ\"\
-viewIntent = Intent(\"android.intent.action.VIEW\",Uri.parse(url))\
-activity.startActivity(viewIntent)\
-end)\
-.设置消极按钮(\"Cancel\")\
-.显示()\
-      \
+      .设置标题(\"Official Discord\")\
+      .设置消息(\"Are you sure to join the Discord Server?\")\
+      .设置积极按钮(\"Yes\",function()\
+        弹出消息(\"Opening Invite Link in the browser...\")\
+        import \"android.content.Intent\"\
+        import \"android.net.Uri\"\
+        url=\"https://discord.gg/bFA7fQZ\"\
+        viewIntent = Intent(\"android.intent.action.VIEW\",Uri.parse(url))\
+        activity.startActivity(viewIntent)\
+      end)\
+      .设置消极按钮(\"Cancel\")\
+      .显示()\
+\
     end\
   end})\
 .show()\
 " ;
               } ;
           [6]	= {
-              ["icon"]	= "drawable/information_outline.png" ;
               ["name"]	= "About" ;
+              ["icon"]	= "drawable/information_outline.png" ;
               ["onClick"]	= "aboutstring = \"\"\
 \
 taustation = \"Tau Station is an MMORPG made by Makes Dreams Happen. All copyrights go to Makes Dreams Happen.\"\
@@ -257,138 +269,128 @@ updatelog = \"Current Version: \"..version..\" (Dev)\"\
 updatelog = updatelog..\"\\nv0.1.0.0\"\
 updatelog = updatelog..\"\\n-[new] Initial Release\"\
 \
-\
-\
 aboutstring = taustation..\"\\n\"..taustationapp..\"\\n\"\
 aboutstring =aboutstring .. \"\\n\"..updatelog\
 对话框()\
 .设置标题(\"About\")\
 .设置消息(aboutstring)\
 .设置积极按钮(\"Hint?\",function()\
-randomid=math.random(1,7)\
+  randomid=math.random(1,7)\
 \
-if randomid == 1 then\
-  弹出消息(\"The \\\"Shop\\\" button was removed. Sorry MDH. \\nPlease support the game.\")\
-end\
-if randomid==2 then\
-  弹出消息(\"Press and hold on the icons at the bottom will refresh the page (to its initial state).\")\
-end\
-if randomid==3 then\
-  弹出消息(\"Because the programmer herself isn't yet a Syndicate, I cannot program anything for you Syndicates. Sorry.\")\
-end\
-if randomid==4 then\
-  弹出消息(\"The 7 messages are random. Who knows whether you would succeed in doing your next task...\")\
+  if randomid == 1 then\
+    弹出消息(\"The \\\"Shop\\\" button was removed. Sorry MDH. \\nPlease support the game.\")\
   end\
-if randomid==5 then\
-  弹出消息(\"Training in gym is usually not a wise choice.\")\
-end\
-if randomid==6 then\
-  弹出消息(\"When you have VIP status, remember to complete missions. It grants extra EXP.\")\
-end\
-  \
+  if randomid==2 then\
+    弹出消息(\"Press and hold on the icons at the bottom will refresh the page (to its initial state).\")\
+  end\
+  if randomid==3 then\
+    弹出消息(\"Because the programmer herself isn't yet a Syndicate, I cannot program anything for you Syndicates. Sorry.\")\
+  end\
+  if randomid==4 then\
+    弹出消息(\"The 7 messages are random. Who knows whether you would succeed in doing your next task...\")\
+  end\
+  if randomid==5 then\
+    弹出消息(\"Training in gym is usually not a wise choice.\")\
+  end\
+  if randomid==6 then\
+    弹出消息(\"When you have VIP status, remember to complete missions. It grants extra EXP.\")\
+  end\
+\
   if randomid==7 then\
-  弹出消息(\"When not in game, being safe in inn is always wise.\")\
-end\
-  \
+    弹出消息(\"When not in game, being safe in inn is always wise.\")\
+  end\
+\
 \
 end)\
 .显示()" ;
               } ;
           [7]	= {
-              ["icon"]	= "drawable/exit_to_app.png" ;
               ["name"]	= "Exit" ;
+              ["icon"]	= "drawable/exit_to_app.png" ;
               ["onClick"]	= "退出程序()" ;
               } ;
           } ;
-      ["启用"]	= true ;
       } ;
   ["bottomBar"]	= {
       [1]	= {
+          ["text"]	= "Me" ;
           ["statusBarColor"]	= "" ;
           ["icon"]	= "drawable/account_outline.png" ;
-          ["text"]	= "Me" ;
           ["url"]	= "https://alpha.taustation.space/" ;
           } ;
       [2]	= {
+          ["text"]	= "Menu" ;
           ["statusBarColor"]	= "" ;
           ["icon"]	= "drawable/cursor_default_outline.png" ;
-          ["text"]	= "Menu" ;
           ["url"]	= "https://taustation.space/return-to-game/" ;
           } ;
       [3]	= {
+          ["text"]	= "Inventory" ;
           ["statusBarColor"]	= "" ;
           ["icon"]	= "drawable/package_variant.png" ;
-          ["text"]	= "Inventory" ;
           ["url"]	= "https://alpha.taustation.space/character/inventory" ;
           } ;
       [4]	= {
+          ["text"]	= "Discreet" ;
           ["statusBarColor"]	= "" ;
           ["icon"]	= "drawable/comment_check_outline.png" ;
-          ["text"]	= "Discreet" ;
           ["url"]	= "https://alpha.taustation.space/area/discreet-work" ;
           } ;
       [5]	= {
+          ["text"]	= "Sides" ;
           ["statusBarColor"]	= "" ;
           ["icon"]	= "drawable/source_fork.png" ;
-          ["text"]	= "Sides" ;
           ["url"]	= "https://alpha.taustation.space/area/side-jobs" ;
           } ;
       [6]	= {
+          ["text"]	= "Bank" ;
           ["statusBarColor"]	= "" ;
           ["icon"]	= "drawable/bank.png" ;
-          ["text"]	= "Bank" ;
           ["url"]	= "https://alpha.taustation.space/travel/area/bank" ;
           } ;
       [7]	= {
+          ["text"]	= "Gym" ;
           ["statusBarColor"]	= "" ;
           ["icon"]	= "drawable/football.png" ;
-          ["text"]	= "Gym" ;
           ["url"]	= "https://alpha.taustation.space/travel/area/training" ;
           } ;
       [8]	= {
+          ["text"]	= "Inn" ;
           ["statusBarColor"]	= "" ;
           ["icon"]	= "drawable/hotel.png" ;
-          ["text"]	= "Inn" ;
           ["url"]	= "https://alpha.taustation.space/area/hotel-rooms" ;
           } ;
       } ;
-  ["web_control"]	= {
-      [1]	= {
-          ["js"]	= "" ;
-          ["url"]	= "alpha.taustation.space" ;
-          ["remove_element"]	= "layout-structure game-navigation,@ID(chat),banner,avatar-bar,footer-container,page-collapse-trigger-container,tutorial tutorial-toggle,btn-buy-rations,btn-control navigation" ;
-          } ;
-      } ;
-  ["view_attribute"]	= {
-      ["搜索栏圆角弧度"]	= "0dp" ;
-      ["搜索栏阴影强度"]	= "0dp" ;
-      ["侧滑栏宽度"]	= "250dp" ;
-      ["顶栏标题"]	= "Tau Station" ;
-      ["底栏高度"]	= "37dp" ;
-      ["顶栏高度"]	= "0dp" ;
-      ["顶栏阴影强度"]	= "100dp" ;
-      ["底栏图标大小"]	= "18dp" ;
+  ["switch"]	= {
+      ["显示状态栏"]	= true ;
+      ["横屏"]	= true ;
+      ["启用启动图"]	= true ;
+      ["支持滑动页面"]	= true ;
       } ;
   ["web"]	= {
       ["网页沉浸"]	= false ;
-      ["默认广告标记标签"]	= "" ;
       ["启用长按菜单"]	= true ;
-      ["启用进度条"]	= true ;
-      ["惰性加载"]	= true ;
+      ["默认广告标记标签"]	= "" ;
       ["支持打开外部应用"]	= true ;
+      ["惰性加载"]	= true ;
       ["浏览器用户标识"]	= "PC" ;
+      ["启用进度条"]	= true ;
       } ;
-  ["global_js"]	= "" ;
   ["events"]	= {
-      ["程序启动"]	= "--Events on Launch\
+      ["收到新标题"]	= "-- on New Title Received\
+\
+-- Get variables\
+新标题=..." ;
+      ["程序启动"]	= "-- Events on Launch\
 require \"import\"\
 import \"java.io.File\"\
 debugmode = 0\
+areasloaded = 0\
 \
---Load https://alpha.taustation.space/\
+-- Load https://alpha.taustation.space/\
 加载网页(\"https://alpha.taustation.space/\")\
 \
---Attempts to Fullscreen\
+-- Attempts to Fullscreen\
 -- toolbar.parent.setVisibility(View.INVISIBLE)\
 -- toolbar.parent.setAlpha(0)\
 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)\
@@ -425,7 +427,7 @@ webView.setWebViewClient(client(callback{\
       弹出消息(\"Welcome to TauManager.\")\
       进入子页面(\"taumanager\",{链接=网页链接})\
     end\
-    \
+\
     if url==\"https://taustation.space/\" or string.find(url,\"https://taustation.space/?_mid\") then\
       itemsList={\"Login\",\"Sign up\"}\
       AlertDialog.Builder(this)\
@@ -441,57 +443,34 @@ webView.setWebViewClient(client(callback{\
 }))\
 \
 " ;
-      ["网页加载完毕"]	= "--on Page Loaded\
-\
-\
---接收参数\
-浏览器对象,网页链接=...\
-" ;
-      ["网页即将加载"]	= "--on New Page Loading\
---弹出消息(\"Page refreshing...\")\
+      ["网页即将加载"]	= "-- on New Page Loading\
+-- 弹出消息(\"Page refreshing...\")\
 vertical = 0\
 activity.setRequestedOrientation(vertical); \
-\
+-- Get variables\
 浏览器对象,网页链接=..." ;
-      ["收到新标题"]	= "--浏览器加载新页面并获得新标题时执行的事件\
+      ["网页加载完毕"]	= "-- on Page Loaded\
 \
---接收参数\
-新标题=..." ;
+-- Get variables\
+浏览器对象,网页链接=...\
+" ;
       } ;
-  ["colors"]	= {
-      ["顶栏部件"]	= "#ffffffff" ;
-      ["悬浮按钮图标"]	= "#FFFFFF" ;
-      ["进度条"]	= "#ff7534be" ;
-      ["搜索栏提示文字"]	= "#80000000" ;
-      ["底栏图标触摸波纹"]	= "#24000000" ;
-      ["侧滑栏列表图标"]	= "#ff2eaaaa" ;
-      ["底栏"]	= "#ff141416" ;
-      ["底栏图标选中"]	= "#ff2eaaaa" ;
-      ["底栏图标"]	= "#c5bc39d5" ;
-      ["搜索栏部件"]	= "#ff888888" ;
-      ["搜索栏背景"]	= "#ffffffff" ;
-      ["导航栏"]	= "#ff212121" ;
-      ["搜索栏部件触摸"]	= "#44000000" ;
-      ["侧滑栏背景"]	= "#ff242424" ;
-      ["顶栏"]	= "#ff141416" ;
-      ["侧滑栏列表文字"]	= "#e7e7e7e7" ;
-      ["顶栏部件触摸"]	= "#22000000" ;
+  ["view_attribute"]	= {
+      ["顶栏高度"]	= "0dp" ;
+      ["顶栏阴影强度"]	= "100dp" ;
+      ["底栏图标大小"]	= "18dp" ;
+      ["底栏高度"]	= "37dp" ;
+      ["搜索栏圆角弧度"]	= "0dp" ;
+      ["搜索栏阴影强度"]	= "0dp" ;
+      ["顶栏标题"]	= "Tau Station" ;
+      ["侧滑栏宽度"]	= "250dp" ;
       } ;
-  ["switch"]	= {
-      ["显示状态栏"]	= true ;
-      ["支持滑动页面"]	= true ;
-      ["横屏"]	= true ;
-      ["启用启动图"]	= true ;
-      } ;
-  ["toolbar"]	= {
-      ["启用搜索功能"]	= false ;
-      ["menus"]	= {
+  ["global_js"]	= "" ;
+  ["web_control"]	= {
+      [1]	= {
+          ["remove_element"]	= "layout-structure game-navigation,@ID(chat),banner,avatar-bar,footer-container,page-collapse-trigger-container,tutorial tutorial-toggle,btn-buy-rations,btn-control navigation" ;
+          ["js"]	= "" ;
+          ["url"]	= "alpha.taustation.space" ;
           } ;
-      ["icon_btns"]	= {
-          } ;
-      ["搜索框提示"]	= "" ;
-      ["输入栏模式"]	= false ;
-      ["搜索URL"]	= "" ;
-      ["搜索功能"]	= false ;
       } ;
   } ;
