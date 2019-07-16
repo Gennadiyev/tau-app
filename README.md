@@ -23,9 +23,11 @@ This App does not modifies the general page layout.
 
 ## About Codes
 
+**This project is mainly written in Lua plus a bit Java. The main Lua codes are at `/source/config.table`, and Java is used to write libraries in `/source/lib`.**
+
 The codes are written mainly under a highly-packaged **Lua** template (which is a private project). The template controls most layouts, transitions, and handles basic webview commands. The template also serves as the way to build the `.apk`.
 
-Despite the template's private attribute, the `config.table` contains all the codes that propelled the Tau Station App. The template makes the file structure unified, so that every bit of code can be edited within one file.
+Despite the template's private attribute, the `config.table` contains all the codes that propelled the Tau Station App. The template makes the file unified, so that every bit of code can be edited within one file.
 
 There are some packaged functions using Chinese, because the developer is a Chinese. Some references are listed here:
 
