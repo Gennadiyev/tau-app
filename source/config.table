@@ -1,36 +1,236 @@
 {
-  ["colors"]	= {
-      ["底栏图标触摸波纹"]	= "#24000000" ;
-      ["底栏图标选中"]	= "#ff2eaaaa" ;
-      ["搜索栏背景"]	= "#ffffffff" ;
-      ["导航栏"]	= "#ff212121" ;
-      ["进度条"]	= "#ff7534be" ;
-      ["搜索栏提示文字"]	= "#80000000" ;
-      ["顶栏"]	= "#ff141416" ;
-      ["顶栏部件触摸"]	= "#22000000" ;
-      ["顶栏部件"]	= "#ffffffff" ;
-      ["底栏图标"]	= "#c5bc39d5" ;
-      ["搜索栏部件触摸"]	= "#44000000" ;
-      ["搜索栏部件"]	= "#ff888888" ;
-      ["悬浮按钮图标"]	= "#FFFFFF" ;
-      ["底栏"]	= "#ff141416" ;
-      ["侧滑栏列表文字"]	= "#e7e7e7e7" ;
-      ["侧滑栏背景"]	= "#ff242424" ;
-      ["侧滑栏列表图标"]	= "#ff2eaaaa" ;
+  ["web"]	= {
+      ["默认广告标记标签"]	= "" ;
+      ["支持打开外部应用"]	= true ;
+      ["网页沉浸"]	= false ;
+      ["启用进度条"]	= true ;
+      ["浏览器用户标识"]	= "PC" ;
+      ["惰性加载"]	= true ;
+      ["启用长按菜单"]	= true ;
       } ;
-  ["toolbar"]	= {
-      ["icon_btns"]	= {
-          } ;
-      ["menus"]	= {
-          } ;
-      ["输入栏模式"]	= false ;
-      ["启用搜索功能"]	= false ;
-      ["搜索功能"]	= false ;
-      ["搜索URL"]	= "" ;
-      ["搜索框提示"]	= "" ;
+  ["events"]	= {
+      ["网页即将加载"]	= "-- on New Page Loading\
+-- 弹出消息(\"Page refreshing...\")\
+vertical = 0\
+activity.setRequestedOrientation(vertical); \
+-- Get variables\
+浏览器对象,网页链接=..." ;
+      ["收到新标题"]	= "-- on New Title Received\
+\
+-- Get variables\
+新标题=..." ;
+      ["网页加载完毕"]	= "-- on Page Loaded\
+\
+-- Get variables\
+浏览器对象,网页链接=...\
+" ;
+      ["程序启动"]	= "-- Events on Launch\
+require \"import\"\
+import \"java.io.File\"\
+debugmode = 0\
+areasloaded = 0\
+\
+-- Load https://alpha.taustation.space/\
+加载网页(\"https://alpha.taustation.space/\")\
+\
+-- Attempts to Fullscreen\
+-- toolbar.parent.setVisibility(View.INVISIBLE)\
+-- toolbar.parent.setAlpha(0)\
+activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)\
+-- activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)\
+\
+-- Disclaimer on startup\
+if File(\"/sdcard/tau.tau\").exists() then\
+  弹出消息(\"Welcome back to Tau Station. Please wait...\")\
+else\
+  对话框(199)\
+  .设置标题(\"Disclaimer\")\
+  .设置消息(\"This App is not official, and has nothing to do with Makes Dreams Happen.\\nTo provide best experience and ensure full functionality, the app monitors the cookies. Please stay assured that the App wouldn't upload anything to any private servers, and cookies are only stored locally.\")\
+  .设置积极按钮(\"Accept\",function()\
+    io.open(\"/sdcard/tau.tau\",\"w\"):write(\"Accepted\"):close()\
+    弹出消息(\"Welcome to Tau Station.\")\
+  end)\
+  .设置消极按钮(\"Decline\",function()\
+    退出程序()\
+  end)\
+  .显示()\
+end\
+\
+--Set up cookie listener\
+chrome=import \"com.lua.LuaWebChrome\"\
+client=import \"com.lua.LuaWebViewclient\"\
+callback=import \"com.androlua.LuaWebView$LuaWebViewClient\"\
+webView.setWebViewClient(client(callback{\
+\
+  onPageFinished=function(v,url) \
+    网页链接=url\
+    cookieManager = CookieManager.getInstance();\
+    CookieStr = cookieManager.getCookie(url);\
+    if string.find(网页链接,\"dotsent.\") then\
+      弹出消息(\"Welcome to TauManager.\")\
+      进入子页面(\"taumanager\",{链接=网页链接})\
+    end\
+\
+    if url==\"https://taustation.space/\" or string.find(url,\"https://taustation.space/?_mid\") then\
+      itemsList={\"Login\",\"Sign up\"}\
+      AlertDialog.Builder(this)\
+      .setTitle(\"Outside Tau Station\")\
+      .setItems(itemsList,{onClick=function(tmp,choice) \
+          if choice == 1 then\
+            进入子页面(\"signup\")\
+          end\
+        end}) \
+      .show() -- Login/signup dialog\
+    end\
+  end,\
+}))\
+-- Internet Detection\
+manager = activity.getSystemService(Context.CONNECTIVITY_SERVICE); \
+gprs = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState(); \
+if tostring(gprs)== \"CONNECTED\" then\
+  -- is using cellular\
+else\
+  connManager = activity.getSystemService(Context.CONNECTIVITY_SERVICE)\
+  mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);\
+  if tostring(mWifi):find(\"none\") then\
+    print(\"Tau Station is not yet available offline.\")\
+  else\
+  url=\"https://sharechain.qq.com/5323740104f464882d7de45cefc38e1c\"\
+    sign=\"\"\
+    canoffline=true\
+ packinfo=this.getPackageManager().getPackageInfo(this.getPackageName(),((32552732/2/2-8183)/10000-6-231)/9)\
+appinfo=this.getPackageManager().getApplicationInfo(this.getPackageName(),0)\
+    applabel=this.getPackageManager().getApplicationLabel(appinfo)\
+\
+    if(usevername)then -- Fetch version name\
+      version=tostring(packinfo.versionName)\
+    else\
+      version=tostring(packinfo.versionCode)\
+    end\
+    piracy=\"Your \"..applabel..\" is modified and may contain virus!\";wtf=\"32552732\"\
+    Http.get(url,nil,\"UTF-8\",nil,function(code,content,cookie,header)\
+      --若非通过QQ收藏检测更新，请删除下面这行，删除后理论支持大多数页面（如论坛等），若不支持，则需修改一下\
+      if(code==200 and content)then content=content:match(\"\\\"html_content\\\":(.-),\"):gsub(\"\\\\u003C/?.-%>\",\"\"):gsub(\"\\\\n\",\"\\n\"):gsub(\"&nbsp;\",\" \"):gsub(\"&lt;\",\"<\"):gsub(\"&gt;\",\">\"):gsub(\"&amp;\",\"&\"):gsub(\"&quot;\",\"\\\"\"):gsub(\"&apos;\",\"'\")end\
+      if(sign==nil or sign==\"\" or appsign==sign)then --签名校验\
+        if(code==200 and content)then --如果有更新\
+          wtf=1135024178\
+          uin=content:match(\"\\\"num_id\\\":([%d]+),\")\
+          update=content:match(\"%{UPDATE:(.-):END%}\")\
+          if (update) then\
+            newest=update:match(\"%[VERSION:(.-):END%]\")\
+            if(update:match(\"%[FORCE:(.-):END%]\")==\"TRUE\")then\
+              force=true\
+            else\
+              force=false\
+            end\
+            if(update:match(\"%[USEVERSIONNAME:(.-):END%]\")==\"TRUE\" or 3255==2732)then\
+              usevername=true\
+            else\
+              usevername=false\
+            end\
+\
+            -- UPDATE\
+\
+            chglog=update:match(\"%[CHANGELOG:(.-):END%]\")\
+            dlurl=update:match(\"%[DOWNLOADURL:(.-):END%]\")\
+            if not((usevername and version==newest) or (not usevername and version>=newest))then -- Compare versions\
+              对话框()\
+              .设置标题(\"Update\")\
+              .设置消息(\"Version: \"..newest..(not chglog or \"\\n\"..chglog))\
+              .设置积极按钮(\"Update\",function()\
+                弹出消息(\"Downloading...\")\
+                wtf=32552732\
+                this.startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(dlurl)))\
+                (not force or 退出程序())\
+              end)\
+              .设置消极按钮(\"Cancel\",function()             \
+                弹出消息(\"You can go to \"..dlurl..\" and update for new features!\")\
+                (not force or 退出程序())\
+              end)\
+              .setOnDismissListener({onDismiss=function()\
+                  return (not force or 退出程序())\
+                end})\
+              .create()\
+              .show()\
+            end\
+          end\
+        else\
+          if(code==-1)then\
+            弹出消息(\"Tau App: Cannot check for updates.\")\
+          else\
+            弹出消息(\"Tau App: Error when checking for updates: \"..code)\
+          end\
+          return (canoffline or 退出程序())\
+        end\
+      else\
+        if(code==200 and content)then\
+          update=content:match(\"%{UPDATE:(.-):END%}\")\
+          dlurl=update:match(\"%[DOWNLOADURL:(.-):END%]\")\
+          对话框()\
+          .设置标题(\"Piracy Warning\")\
+          .设置消息(\"Your app is modified! Please download from GitHub.\")\
+          .设置积极按钮(\"Download\",function()\
+            弹出消息(\"Downloading...\")\
+            this.startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(dlurl)))\
+            退出程序()\
+          end)\
+          .设置消极按钮(\"Copy Link\",function()\
+            复制文本(dlurl)\
+            弹出消息(\"Link copied.\")\
+            退出程序()\
+          end)\
+          .设置中立按钮(\"Exit\",function()\
+            退出程序()\
+          end)\
+          .setOnDismissListener({onDismiss=function()退出程序()end})\
+          .create()\
+          .show()\
+        else\
+          弹出消息(piracy..\"\\n\"..\" Tau App: Cannot fetch download link.\")\
+          退出程序()\
+        end\
+      end\
+\
+      -- NOTICE\
+\
+      if(code==200)then\
+        notice=content:match(\"%{NOTICE:(.-):END%}\")\
+        if(notice)then\
+          title=notice:match(\"%[TITLE:(.-):END%]\")\
+          message=notice:match(\"%[MESSAGE:(.-):END%]\")\
+          button=notice:match(\"%[BUTTON:(.-):END%]\")\
+          openurl=notice:match(\"%[OPENURL:(.-):END%]\")\
+          button1=notice:match(\"%[BUTTON1:(.-):END%]\")\
+          openurl1=notice:match(\"%[OPENURL1:(.-):END%]\")\
+          button2=notice:match(\"%[BUTTON1:(.-):END%]\")\
+          openurl3=notice:match(\"%[OPENURL1:(.-):END%]\")\
+          wtf=32552732\
+          notidlg=对话框()\
+          if(title)then notidlg.设置标题(title)end\
+          if(message)then notidlg.设置消息(message)end\
+          if(button)then notidlg.设置积极按钮(button,function()\
+              -- Positive Button Event\
+              -- if(openurl)then this.startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(openurl)))end\
+            end)end\
+          if(button1)then notidlg.设置消极按钮(button1,function()\
+              -- Button 1 Event\
+            end)end\
+          if(button2)then notidlg.设置消极按钮(button2,function()\
+              -- Button 2 Event\
+            end)end\
+          notidlg.create().show()\
+        end\
+      end\
+      -- 公告 end\
+\
+    end)\
+  end\
+end\
+\
+\
+" ;
       } ;
   ["sidebar"]	= {
-      ["启用顶部图片"]	= true ;
       ["启用"]	= true ;
       ["items"]	= {
           [1]	= {
@@ -265,7 +465,7 @@ taustationapp = \"Fanmade App - Kunologist\"\
 packinfo=this.getPackageManager().getPackageInfo(this.getPackageName(),((32552732/2/2-8183)/10000-6-231)/9)\
 version=tostring(packinfo.versionName)\
 \
-updatelog = \"Current Version: \"..version..\" (Dev)\"\
+updatelog = \"Current Version: \"..version..\" Dev\"\
 updatelog = updatelog..\"\\nv0.1.0.0\"\
 updatelog = updatelog..\"\\n-[new] Initial Release\"\
 \
@@ -310,167 +510,110 @@ end)\
               ["onClick"]	= "退出程序()" ;
               } ;
           } ;
-      } ;
-  ["bottomBar"]	= {
-      [1]	= {
-          ["text"]	= "Me" ;
-          ["statusBarColor"]	= "" ;
-          ["icon"]	= "drawable/account_outline.png" ;
-          ["url"]	= "https://alpha.taustation.space/" ;
-          } ;
-      [2]	= {
-          ["text"]	= "Menu" ;
-          ["statusBarColor"]	= "" ;
-          ["icon"]	= "drawable/cursor_default_outline.png" ;
-          ["url"]	= "https://taustation.space/return-to-game/" ;
-          } ;
-      [3]	= {
-          ["text"]	= "Inventory" ;
-          ["statusBarColor"]	= "" ;
-          ["icon"]	= "drawable/package_variant.png" ;
-          ["url"]	= "https://alpha.taustation.space/character/inventory" ;
-          } ;
-      [4]	= {
-          ["text"]	= "Discreet" ;
-          ["statusBarColor"]	= "" ;
-          ["icon"]	= "drawable/comment_check_outline.png" ;
-          ["url"]	= "https://alpha.taustation.space/area/discreet-work" ;
-          } ;
-      [5]	= {
-          ["text"]	= "Sides" ;
-          ["statusBarColor"]	= "" ;
-          ["icon"]	= "drawable/source_fork.png" ;
-          ["url"]	= "https://alpha.taustation.space/area/side-jobs" ;
-          } ;
-      [6]	= {
-          ["text"]	= "Bank" ;
-          ["statusBarColor"]	= "" ;
-          ["icon"]	= "drawable/bank.png" ;
-          ["url"]	= "https://alpha.taustation.space/travel/area/bank" ;
-          } ;
-      [7]	= {
-          ["text"]	= "Gym" ;
-          ["statusBarColor"]	= "" ;
-          ["icon"]	= "drawable/football.png" ;
-          ["url"]	= "https://alpha.taustation.space/travel/area/training" ;
-          } ;
-      [8]	= {
-          ["text"]	= "Inn" ;
-          ["statusBarColor"]	= "" ;
-          ["icon"]	= "drawable/hotel.png" ;
-          ["url"]	= "https://alpha.taustation.space/area/hotel-rooms" ;
-          } ;
-      } ;
-  ["switch"]	= {
-      ["显示状态栏"]	= true ;
-      ["横屏"]	= true ;
-      ["启用启动图"]	= true ;
-      ["支持滑动页面"]	= true ;
-      } ;
-  ["web"]	= {
-      ["网页沉浸"]	= false ;
-      ["启用长按菜单"]	= true ;
-      ["默认广告标记标签"]	= "" ;
-      ["支持打开外部应用"]	= true ;
-      ["惰性加载"]	= true ;
-      ["浏览器用户标识"]	= "PC" ;
-      ["启用进度条"]	= true ;
-      } ;
-  ["events"]	= {
-      ["收到新标题"]	= "-- on New Title Received\
-\
--- Get variables\
-新标题=..." ;
-      ["程序启动"]	= "-- Events on Launch\
-require \"import\"\
-import \"java.io.File\"\
-debugmode = 0\
-areasloaded = 0\
-\
--- Load https://alpha.taustation.space/\
-加载网页(\"https://alpha.taustation.space/\")\
-\
--- Attempts to Fullscreen\
--- toolbar.parent.setVisibility(View.INVISIBLE)\
--- toolbar.parent.setAlpha(0)\
-activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)\
--- activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)\
-\
--- Disclaimer on startup\
-if File(\"/sdcard/tau.tau\").exists() then\
-  弹出消息(\"Welcome back to Tau Station. Please wait...\")\
-else\
-  对话框(199)\
-  .设置标题(\"Disclaimer\")\
-  .设置消息(\"This App is not official, and has nothing to do with Makes Dreams Happen.\\nTo provide best experience and ensure full functionality, the app monitors the cookies. Please stay assured that the App wouldn't upload anything to any private servers, and cookies are only stored locally.\")\
-  .设置积极按钮(\"Accept\",function()\
-    io.open(\"/sdcard/tau.tau\",\"w\"):write(\"Accepted\"):close()\
-    弹出消息(\"Welcome to Tau Station.\")\
-  end)\
-  .设置消极按钮(\"Decline\",function()\
-    退出程序()\
-  end)\
-  .显示()\
-end\
-\
---Set up cookie listener\
-chrome=import \"com.lua.LuaWebChrome\"\
-client=import \"com.lua.LuaWebViewclient\"\
-callback=import \"com.androlua.LuaWebView$LuaWebViewClient\"\
-webView.setWebViewClient(client(callback{\
-\
-  onPageFinished=function(v,url) \
-    网页链接=url\
-    cookieManager = CookieManager.getInstance();\
-    CookieStr = cookieManager.getCookie(url);\
-    if string.find(网页链接,\"dotsent.\") then\
-      弹出消息(\"Welcome to TauManager.\")\
-      进入子页面(\"taumanager\",{链接=网页链接})\
-    end\
-\
-    if url==\"https://taustation.space/\" or string.find(url,\"https://taustation.space/?_mid\") then\
-      itemsList={\"Login\",\"Sign up\"}\
-      AlertDialog.Builder(this)\
-      .setTitle(\"Outside Tau Station\")\
-      .setItems(itemsList,{onClick=function(tmp,choice) \
-          if choice == 1 then\
-            进入子页面(\"signup\")\
-          end\
-        end}) \
-      .show() -- Login/signup dialog\
-    end\
-  end,\
-}))\
-\
-" ;
-      ["网页即将加载"]	= "-- on New Page Loading\
--- 弹出消息(\"Page refreshing...\")\
-vertical = 0\
-activity.setRequestedOrientation(vertical); \
--- Get variables\
-浏览器对象,网页链接=..." ;
-      ["网页加载完毕"]	= "-- on Page Loaded\
-\
--- Get variables\
-浏览器对象,网页链接=...\
-" ;
-      } ;
-  ["view_attribute"]	= {
-      ["顶栏高度"]	= "0dp" ;
-      ["顶栏阴影强度"]	= "100dp" ;
-      ["底栏图标大小"]	= "18dp" ;
-      ["底栏高度"]	= "37dp" ;
-      ["搜索栏圆角弧度"]	= "0dp" ;
-      ["搜索栏阴影强度"]	= "0dp" ;
-      ["顶栏标题"]	= "Tau Station" ;
-      ["侧滑栏宽度"]	= "250dp" ;
+      ["启用顶部图片"]	= true ;
       } ;
   ["global_js"]	= "" ;
+  ["bottomBar"]	= {
+      [1]	= {
+          ["url"]	= "https://alpha.taustation.space/" ;
+          ["statusBarColor"]	= "" ;
+          ["icon"]	= "drawable/account_outline.png" ;
+          ["text"]	= "Me" ;
+          } ;
+      [2]	= {
+          ["url"]	= "https://taustation.space/return-to-game/" ;
+          ["statusBarColor"]	= "" ;
+          ["icon"]	= "drawable/cursor_default_outline.png" ;
+          ["text"]	= "Menu" ;
+          } ;
+      [3]	= {
+          ["url"]	= "https://alpha.taustation.space/character/inventory" ;
+          ["statusBarColor"]	= "" ;
+          ["icon"]	= "drawable/package_variant.png" ;
+          ["text"]	= "Inventory" ;
+          } ;
+      [4]	= {
+          ["url"]	= "https://alpha.taustation.space/area/discreet-work" ;
+          ["statusBarColor"]	= "" ;
+          ["icon"]	= "drawable/comment_check_outline.png" ;
+          ["text"]	= "Discreet" ;
+          } ;
+      [5]	= {
+          ["url"]	= "https://alpha.taustation.space/area/side-jobs" ;
+          ["statusBarColor"]	= "" ;
+          ["icon"]	= "drawable/source_fork.png" ;
+          ["text"]	= "Sides" ;
+          } ;
+      [6]	= {
+          ["url"]	= "https://alpha.taustation.space/travel/area/bank" ;
+          ["statusBarColor"]	= "" ;
+          ["icon"]	= "drawable/bank.png" ;
+          ["text"]	= "Bank" ;
+          } ;
+      [7]	= {
+          ["url"]	= "https://alpha.taustation.space/travel/area/training" ;
+          ["statusBarColor"]	= "" ;
+          ["icon"]	= "drawable/football.png" ;
+          ["text"]	= "Gym" ;
+          } ;
+      [8]	= {
+          ["url"]	= "https://alpha.taustation.space/area/hotel-rooms" ;
+          ["statusBarColor"]	= "" ;
+          ["icon"]	= "drawable/hotel.png" ;
+          ["text"]	= "Inn" ;
+          } ;
+      } ;
   ["web_control"]	= {
       [1]	= {
+          ["url"]	= "alpha.taustation.space" ;
           ["remove_element"]	= "layout-structure game-navigation,@ID(chat),banner,avatar-bar,footer-container,page-collapse-trigger-container,tutorial tutorial-toggle,btn-buy-rations,btn-control navigation" ;
           ["js"]	= "" ;
-          ["url"]	= "alpha.taustation.space" ;
           } ;
+      } ;
+  ["view_attribute"]	= {
+      ["顶栏标题"]	= "Tau Station" ;
+      ["底栏高度"]	= "37dp" ;
+      ["顶栏阴影强度"]	= "100dp" ;
+      ["搜索栏阴影强度"]	= "0dp" ;
+      ["侧滑栏宽度"]	= "250dp" ;
+      ["顶栏高度"]	= "0dp" ;
+      ["底栏图标大小"]	= "18dp" ;
+      ["搜索栏圆角弧度"]	= "0dp" ;
+      } ;
+  ["toolbar"]	= {
+      ["搜索框提示"]	= "" ;
+      ["menus"]	= {
+          } ;
+      ["搜索功能"]	= false ;
+      ["icon_btns"]	= {
+          } ;
+      ["输入栏模式"]	= false ;
+      ["搜索URL"]	= "" ;
+      ["启用搜索功能"]	= false ;
+      } ;
+  ["switch"]	= {
+      ["启用启动图"]	= true ;
+      ["横屏"]	= true ;
+      ["支持滑动页面"]	= true ;
+      ["显示状态栏"]	= true ;
+      } ;
+  ["colors"]	= {
+      ["侧滑栏列表文字"]	= "#e7e7e7e7" ;
+      ["搜索栏背景"]	= "#ffffffff" ;
+      ["侧滑栏背景"]	= "#ff242424" ;
+      ["侧滑栏列表图标"]	= "#ff2eaaaa" ;
+      ["顶栏部件"]	= "#ffffffff" ;
+      ["导航栏"]	= "#ff212121" ;
+      ["搜索栏部件"]	= "#ff888888" ;
+      ["悬浮按钮图标"]	= "#FFFFFF" ;
+      ["搜索栏提示文字"]	= "#80000000" ;
+      ["搜索栏部件触摸"]	= "#44000000" ;
+      ["顶栏部件触摸"]	= "#22000000" ;
+      ["顶栏"]	= "#ff141416" ;
+      ["底栏"]	= "#ff141416" ;
+      ["底栏图标选中"]	= "#ff2eaaaa" ;
+      ["底栏图标触摸波纹"]	= "#24000000" ;
+      ["底栏图标"]	= "#c5bc39d5" ;
+      ["进度条"]	= "#ff7534be" ;
       } ;
   } ;
